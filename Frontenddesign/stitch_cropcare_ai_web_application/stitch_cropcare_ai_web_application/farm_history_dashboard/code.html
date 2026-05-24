@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Farm History Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7fbe8",
+                        "primary-fixed-dim": "#91db2a",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e0e5d2",
+                        "on-primary-container": "#315200",
+                        "secondary": "#2e6a41",
+                        "background": "#f7fbe8",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f1f6e3",
+                        "on-background": "#181d12",
+                        "on-secondary-container": "#347047",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#416900",
+                        "on-secondary-fixed": "#00210d",
+                        "secondary-fixed-dim": "#96d5a3",
+                        "surface-container": "#ebf0dd",
+                        "tertiary": "#97339a",
+                        "inverse-on-surface": "#eef3e0",
+                        "tertiary-container": "#ff90fd",
+                        "surface-dim": "#d7dcca",
+                        "tertiary-fixed": "#ffd6f8",
+                        "on-secondary-fixed-variant": "#12512c",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e0e5d2",
+                        "surface-container-high": "#e6ead8",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#424936",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#7d1883",
+                        "outline": "#727a64",
+                        "on-primary-fixed": "#102000",
+                        "primary-container": "#84cc16",
+                        "surface-tint": "#416900",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#181d12",
+                        "inverse-surface": "#2d3226",
+                        "inverse-primary": "#91db2a",
+                        "on-tertiary-fixed-variant": "#7b1480",
+                        "primary-fixed": "#acf847",
+                        "outline-variant": "#c1cab0",
+                        "tertiary-fixed-dim": "#ffa9fa",
+                        "secondary-container": "#b1f2be",
+                        "surface": "#f7fbe8",
+                        "on-primary-fixed-variant": "#304f00",
+                        "secondary-fixed": "#b1f2be",
+                        "on-tertiary-fixed": "#37003b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "32px",
+                        "base": "8px",
+                        "section-gap": "64px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #e7e5e4;
+        }
+        .glow-line {
+            filter: drop-shadow(0 0 8px rgba(145, 219, 42, 0.6));
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased pb-24 md:pb-0 pt-16 md:pt-24 min-h-screen">
+<!-- TopNavBar (Web) -->
+<nav class="hidden md:flex fixed top-0 left-0 w-full z-50 justify-between items-center px-container-padding h-16 bg-white/70 dark:bg-surface-container/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">CropCare AI</div>
+<div class="flex items-center space-x-8">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors flex items-center h-full pt-1" href="#">Scanner</a>
+<a class="font-body-md text-body-md text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary pb-1 flex items-center h-full pt-1" href="#">History</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors flex items-center h-full pt-1" href="#">Wiki</a>
+</div>
+<div class="flex items-center">
+<button class="p-2 rounded-full hover:bg-primary-container/20 transition-all duration-300 text-primary dark:text-primary-fixed-dim">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-container-padding mt-8 mb-section-gap space-y-gutter">
+<header class="mb-12">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-2">Farm History</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Review temporal scan data and field health progression.</p>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Health Trend Chart (Spans 2 columns on desktop) -->
+<div class="glass-card rounded-lg p-6 md:col-span-2 flex flex-col hover:bg-white/80 transition-all duration-300">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">Vigor Trend Analysis</h2>
+<select class="bg-surface-container-low border-none rounded-full px-4 py-2 font-label-sm text-label-sm text-on-surface focus:ring-2 focus:ring-primary">
+<option>Last 30 Days</option>
+<option>Last 90 Days</option>
+<option>All Time</option>
+</select>
+</div>
+<div class="flex-grow flex items-end justify-between relative h-48 mt-4">
+<!-- Faux Chart Lines -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<path class="glow-line" d="M0,80 Q25,70 50,40 T100,20" fill="none" stroke="#91db2a" stroke-width="3"></path>
+<path d="M0,80 Q25,70 50,40 T100,20" fill="none" stroke="#416900" stroke-width="1"></path>
+</svg>
+<!-- Y-Axis Labels -->
+<div class="absolute left-0 h-full flex flex-col justify-between text-label-sm text-on-surface-variant opacity-50 py-2">
+<span>100%</span>
+<span>50%</span>
+<span>0%</span>
+</div>
+</div>
+<!-- X-Axis Labels -->
+<div class="flex justify-between mt-4 text-label-sm text-on-surface-variant opacity-70">
+<span>Oct 1</span>
+<span>Oct 15</span>
+<span>Nov 1</span>
+<span>Nov 15</span>
+</div>
+</div>
+<!-- Scan Summary Stats -->
+<div class="space-y-gutter md:col-span-1">
+<div class="glass-card rounded-DEFAULT p-6 flex items-center justify-between hover:scale-[1.02] transition-transform">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Total Scans</p>
+<p class="font-headline-lg text-headline-lg text-primary mt-1">1,248</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="qr_code_scanner" style="font-variation-settings: 'FILL' 1;">qr_code_scanner</span>
+</div>
+</div>
+<div class="glass-card rounded-DEFAULT p-6 flex items-center justify-between hover:scale-[1.02] transition-transform">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Anomalies Detected</p>
+<p class="font-headline-lg text-headline-lg text-error mt-1">34</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+</div>
+<div class="glass-card rounded-DEFAULT p-6 flex items-center justify-between hover:scale-[1.02] transition-transform">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Overall Health</p>
+<p class="font-headline-lg text-headline-lg text-secondary mt-1">92%</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="energy_savings_leaf" style="font-variation-settings: 'FILL' 1;">energy_savings_leaf</span>
+</div>
+</div>
+</div>
+<!-- Interactive Map View -->
+<div class="glass-card rounded-lg overflow-hidden md:col-span-3 flex flex-col md:flex-row min-h-[400px]">
+<div class="w-full md:w-2/3 relative h-64 md:h-auto bg-surface-container-low">
+<!-- Map Image Placeholder -->
+<img alt="Aerial view of farm fields" class="absolute inset-0 w-full h-full object-cover opacity-80" data-alt="A highly detailed aerial satellite view of expansive agricultural fields, showcasing a patchwork of geometric crop plots in varying shades of vibrant greens and earthy browns. The lighting is bright and even, simulating a high-quality modern drone shot at midday. The aesthetic is clean and technical, fitting a high-tech agricultural dashboard, with subtle digital overlays indicating scan zones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoWgoJA9p3htWjy9T1vEVMZp4SjoB-em6hny6t4a894mKU7FoAjoVKE1mFk4XMOolEMyfjm0hxi6zWegj4XocZ38PNpIsnIKqNgTaV2t6LpG2qermqWdiOywRxtFpj0v0IqcJAl09shbPMcVRfIq1xi0VlBVYFeg8-B5ooBtGH67LMCpMFgdiXLgsP4SQAAg9SXgrSb4IWWiIdqDoqVc4sAyvDwWlBbj68KR9EH3ivGKmocISphIqteX6JhNnoM6FW-GlVN-HQAiM"/>
+<!-- Faux Map Overlays (Scan points) -->
+<div class="absolute top-1/4 left-1/3 w-4 h-4 bg-primary rounded-full border-2 border-white shadow-[0_0_12px_rgba(65,105,0,0.8)] animate-pulse"></div>
+<div class="absolute top-1/2 left-2/3 w-4 h-4 bg-error rounded-full border-2 border-white shadow-[0_0_12px_rgba(186,26,26,0.8)]"></div>
+<div class="absolute bottom-1/3 left-1/2 w-4 h-4 bg-primary rounded-full border-2 border-white shadow-[0_0_12px_rgba(65,105,0,0.8)]"></div>
+</div>
+<div class="w-full md:w-1/3 p-6 flex flex-col bg-white/60 backdrop-blur-md border-l border-outline-variant/20">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Recent Geospatial Logs</h3>
+<div class="flex-grow space-y-4 overflow-y-auto pr-2">
+<!-- Log Item 1 -->
+<div class="p-4 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/30 hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-sm text-label-sm text-primary-container bg-primary-container/10 px-2 py-1 rounded-full">Healthy</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">10:42 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">Sector 7G - Corn</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1 truncate">NDVI index stable. Moisture levels optimal.</p>
+</div>
+<!-- Log Item 2 -->
+<div class="p-4 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/30 hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-sm text-label-sm text-error bg-error-container/30 px-2 py-1 rounded-full">Attention</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">09:15 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">Sector 4A - Soy</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1 truncate">Potential nitrogen deficiency detected in NW quadrant.</p>
+</div>
+<!-- Log Item 3 -->
+<div class="p-4 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/30 hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-sm text-label-sm text-primary-container bg-primary-container/10 px-2 py-1 rounded-full">Healthy</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Yesterday</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">Sector 2B - Wheat</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1 truncate">Growth tracking ahead of schedule.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline of Scans -->
+<div class="glass-card rounded-lg p-6 md:col-span-3">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Scan Timeline</h3>
+<div class="relative border-l-2 border-outline-variant/30 ml-4 space-y-8 pb-4">
+<!-- Timeline Item 1 -->
+<div class="relative pl-8">
+<div class="absolute -left-[9px] top-1 w-4 h-4 bg-primary rounded-full ring-4 ring-white"></div>
+<div class="bg-surface-container-lowest p-4 rounded-DEFAULT border border-outline-variant/30 hover:shadow-sm transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-body-lg text-body-lg text-on-surface font-semibold">Full Drone Survey</h4>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Oct 24, 2023</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Comprehensive multi-spectral scan of the entire northern acreage completed successfully.</p>
+<div class="mt-3 flex gap-2">
+<span class="font-label-sm text-label-sm bg-surface-container-high px-2 py-1 rounded">Multispectral</span>
+<span class="font-label-sm text-label-sm bg-surface-container-high px-2 py-1 rounded">120 Acres</span>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative pl-8">
+<div class="absolute -left-[9px] top-1 w-4 h-4 bg-outline rounded-full ring-4 ring-white"></div>
+<div class="bg-surface-container-lowest p-4 rounded-DEFAULT border border-outline-variant/30 hover:shadow-sm transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-body-lg text-body-lg text-on-surface font-semibold">Targeted Spot Check</h4>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Oct 18, 2023</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Manual scan focusing on pest damage reports in Sector 4A. Mild aphid presence confirmed.</p>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative pl-8">
+<div class="absolute -left-[9px] top-1 w-4 h-4 bg-outline rounded-full ring-4 ring-white"></div>
+<div class="bg-surface-container-lowest p-4 rounded-DEFAULT border border-outline-variant/30 hover:shadow-sm transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-body-lg text-body-lg text-on-surface font-semibold">Irrigation Analysis Scan</h4>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Oct 10, 2023</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Thermal imaging to assess soil moisture distribution post-irrigation cycle.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-white/80 dark:bg-surface-container-high/80 backdrop-blur-xl border-t border-outline-variant/20 rounded-t-lg shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant/50 w-16 h-16 rounded-full transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-2 scale-110 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="history" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-label-sm text-label-sm">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant/50 w-16 h-16 rounded-full transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="book_2">book_2</span>
+<span class="font-label-sm text-label-sm">Wiki</span>
+</a>
+</nav>
+</body></html>

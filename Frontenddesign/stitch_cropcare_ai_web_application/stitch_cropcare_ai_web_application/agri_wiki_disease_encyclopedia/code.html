@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Crop Disease Wiki - CropCare AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#304f00",
+                        "surface-container-low": "#f1f6e3",
+                        "surface": "#f7fbe8",
+                        "on-tertiary-fixed-variant": "#7b1480",
+                        "on-tertiary-container": "#7d1883",
+                        "surface-container-highest": "#e0e5d2",
+                        "tertiary-fixed-dim": "#ffa9fa",
+                        "tertiary-container": "#ff90fd",
+                        "on-primary-fixed": "#102000",
+                        "primary-fixed": "#acf847",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#416900",
+                        "secondary-container": "#b1f2be",
+                        "primary": "#416900",
+                        "surface-variant": "#e0e5d2",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f7fbe8",
+                        "outline-variant": "#c1cab0",
+                        "on-surface": "#181d12",
+                        "primary-fixed-dim": "#91db2a",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e6ead8",
+                        "secondary": "#2e6a41",
+                        "surface-dim": "#d7dcca",
+                        "error": "#ba1a1a",
+                        "tertiary": "#97339a",
+                        "secondary-fixed": "#b1f2be",
+                        "outline": "#727a64",
+                        "on-surface-variant": "#424936",
+                        "tertiary-fixed": "#ffd6f8",
+                        "on-secondary-container": "#347047",
+                        "inverse-primary": "#91db2a",
+                        "secondary-fixed-dim": "#96d5a3",
+                        "on-primary-container": "#315200",
+                        "on-error": "#ffffff",
+                        "on-background": "#181d12",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#12512c",
+                        "background": "#f7fbe8",
+                        "primary-container": "#84cc16",
+                        "surface-container": "#ebf0dd",
+                        "on-secondary-fixed": "#00210d",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#37003b",
+                        "inverse-surface": "#2d3226",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#eef3e0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "container-padding": "32px",
+                        "section-gap": "64px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        
+        .glass-panel {
+            background-color: theme('colors.surface-container-lowest');
+            border: 1px solid theme('colors.outline-variant');
+            transition: all 0.3s ease;
+        }
+        
+        .glass-panel:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 40px -10px rgba(65, 105, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .filter-chip {
+            transition: all 0.2s ease;
+        }
+        .filter-chip.active {
+            background-color: theme('colors.primary-container');
+            color: theme('colors.on-primary-container');
+            font-weight: 600;
+        }
+        .filter-chip:not(.active):hover {
+            background-color: theme('colors.surface-container-high');
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-24 md:pb-8 pt-16 font-body-md text-body-md">
+<!-- TopNavBar (Web) -->
+<nav class="hidden md:flex fixed top-0 left-0 w-full z-50 justify-between items-center px-container-padding h-16 bg-white/70 dark:bg-surface-container/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">
+            CropCare AI
+        </div>
+<div class="flex items-center gap-8">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors hover:bg-primary-container/20 duration-300 px-3 py-2 rounded-lg" href="#">Scanner</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors hover:bg-primary-container/20 duration-300 px-3 py-2 rounded-lg" href="#">History</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary pb-1 px-3 py-2" href="#">Wiki</a>
+</div>
+<div>
+<button class="p-2 rounded-full hover:bg-primary-container/20 transition-all duration-300 text-primary">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 md:px-container-padding pt-6 md:pt-12">
+<!-- Header & Search Section -->
+<div class="mb-section-gap">
+<h1 class="font-display-lg text-display-lg text-primary mb-6">Disease Wiki</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-8">
+                Explore our comprehensive database of crop diseases. Learn to identify symptoms early and protect your yield with actionable insights.
+            </p>
+<div class="sticky top-16 md:top-20 z-40 bg-background/90 backdrop-blur-md pt-4 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+<!-- Search Bar -->
+<div class="relative max-w-3xl mb-6">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-14 pl-12 pr-4 bg-[#f5f5f4] border-none rounded-full font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary-container transition-all" placeholder="Search diseases, symptoms, or treatments..." type="text"/>
+</div>
+<!-- Filters -->
+<div class="flex gap-3 overflow-x-auto hide-scrollbar py-2">
+<button class="filter-chip active px-6 py-2 rounded-full border border-outline-variant whitespace-nowrap font-label-sm text-label-sm">All</button>
+<button class="filter-chip px-6 py-2 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface whitespace-nowrap font-label-sm text-label-sm">Tomato</button>
+<button class="filter-chip px-6 py-2 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface whitespace-nowrap font-label-sm text-label-sm">Potato</button>
+<button class="filter-chip px-6 py-2 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface whitespace-nowrap font-label-sm text-label-sm">Wheat</button>
+<button class="filter-chip px-6 py-2 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface whitespace-nowrap font-label-sm text-label-sm">Apple</button>
+<button class="filter-chip px-6 py-2 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface whitespace-nowrap font-label-sm text-label-sm">Corn</button>
+<button class="filter-chip px-6 py-2 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface whitespace-nowrap font-label-sm text-label-sm">Soy</button>
+</div>
+</div>
+</div>
+<!-- Disease Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="glass-panel rounded-lg overflow-hidden flex flex-col cursor-pointer group">
+<div class="h-48 overflow-hidden relative">
+<img alt="Tomato Early Blight" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A close-up, high-resolution macro shot of a tomato leaf severely infected with Early Blight. The leaf shows distinct dark brown concentric rings and yellow halos against a vibrant, natural green background. The lighting is soft and clinical, highlighting the texture of the diseased tissue. The overall aesthetic is modern, bright, and scientific, aligning with an advanced Agri-Tech diagnostic tool." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqQU9li_70aGIHxFmN-jcOd_9Vcny_fO906I0Yy1y4KHLq4C4bm2r6IcikNgSvFepjfdK0vHE5UVJ9CAzfvZAWtcKS4iRxk6zH3WeBJZaxXXxyWXXAQROJl6-qkXrt2deB93sElTQM3vb6mVana5PPoZGlhMcfLAm1f-LH4yCRAp36ft7QZO5CvtHtAwV9DRROyrNaFqflc_B_YvBOQQK0cLgHgP7lye5kGUdr3kyogFzKSAqBq-7Z5BdLjxjX-yZPIqCRcMo30Bo"/>
+<div class="absolute top-4 left-4">
+<span class="bg-primary-fixed-dim/90 backdrop-blur text-on-primary-fixed px-3 py-1 rounded-full font-label-sm text-label-sm shadow-sm">
+                            Tomato
+                        </span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col relative">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Early Blight</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4 flex-1">
+                        Fungal disease causing target-like spots on leaves, starting from the lower foliage. Can lead to severe defoliation and yield loss.
+                    </p>
+<div class="flex justify-between items-center mt-auto">
+<span class="text-error text-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">warning</span> High Risk
+                        </span>
+<span class="material-symbols-outlined text-primary opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+                            arrow_forward
+                        </span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel rounded-lg overflow-hidden flex flex-col cursor-pointer group">
+<div class="h-48 overflow-hidden relative">
+<img alt="Wheat Rust" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A detailed, macro photograph of wheat stalks suffering from Wheat Leaf Rust. Small, raised orange-red pustules are clearly visible scattered across the long, thin green blades. The background is a soft, out-of-focus golden wheat field under bright, overcast daylight. The composition feels analytical yet organic, fitting a premium agricultural dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkZmdl4AbhhSMbAZrT_ouuVs6obpSrLFKjjYqNUnZHiBWeXKT5-jBTCuTrNzys5fLWi864xd7Wa9mgoEVrcg1NfHJTPk2OqHko0xEGZpiXMOnrQjXmim1dOhZcmEkI925Qyp-ufsaSqJWWGSaDBqbC4L7JLQSUJskxfTIho7qr8CA_dwdILb_M5PQOp-3bMChI_vGN-xh-q7vwOgf_qtuw7WJFsaG4WZG1dFfhqLb90wU6HM1Heci2H_cQreZ2drKXT4Kffq9-iyc"/>
+<div class="absolute top-4 left-4">
+<span class="bg-primary-fixed-dim/90 backdrop-blur text-on-primary-fixed px-3 py-1 rounded-full font-label-sm text-label-sm shadow-sm">
+                            Wheat
+                        </span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col relative">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Leaf Rust</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4 flex-1">
+                        Characterized by small, circular orange-brown pustules on leaves. Spreads rapidly in warm, humid conditions.
+                    </p>
+<div class="flex justify-between items-center mt-auto">
+<span class="text-secondary text-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">info</span> Moderate Risk
+                        </span>
+<span class="material-symbols-outlined text-primary opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+                            arrow_forward
+                        </span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel rounded-lg overflow-hidden flex flex-col cursor-pointer group">
+<div class="h-48 overflow-hidden relative">
+<img alt="Apple Powdery Mildew" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A high-clarity image of apple leaves afflicted with Powdery Mildew. A distinct, white, powdery fungal growth coats the surface of the green leaves, causing them to slightly curl at the edges. The lighting is crisp and even, eliminating harsh shadows to clearly show the disease structure. The image evokes a clean, high-tech agricultural science aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABgnUwEyb9cB7U80H85aCzZIZxj-qBEB9zUqbs8FX5jbDy9RGqpwkh1LB9FrR_kjWgbG3xyRIYosWNOOCV5jflSIGoryLQZlHKhzcrJRmt57J6kqPi9pvR9Kq5R1JsJZ4uiLcTTgVG_u9ItULKAhZDPQ6_VBWSNES6-atCi6Gxb4M5BEo9g4a9vgdbc3SK-e8sBwXtu5hAijFTW9m9QjHL6JM2wVEtinilAJmsDcKv0pfyz2DtR6MS5MSG8IqnlxJEsEsZ4ariAt8"/>
+<div class="absolute top-4 left-4">
+<span class="bg-primary-fixed-dim/90 backdrop-blur text-on-primary-fixed px-3 py-1 rounded-full font-label-sm text-label-sm shadow-sm">
+                            Apple
+                        </span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col relative">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Powdery Mildew</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4 flex-1">
+                        Presents as white, powdery spots on leaves and stems. Thrives in dry, warm climates with high humidity at night.
+                    </p>
+<div class="flex justify-between items-center mt-auto">
+<span class="text-secondary text-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">info</span> Moderate Risk
+                        </span>
+<span class="material-symbols-outlined text-primary opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+                            arrow_forward
+                        </span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-white/80 dark:bg-surface-container-high/80 backdrop-blur-xl rounded-t-lg border-t border-outline-variant/20 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant/50 w-16 h-full transition-colors">
+<span class="material-symbols-outlined mb-1">qr_code_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant/50 w-16 h-full transition-colors">
+<span class="material-symbols-outlined mb-1">history</span>
+<span class="font-label-sm text-label-sm">History</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 hover:bg-surface-variant/50 scale-110 transition-transform duration-200">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">book_2</span>
+<span class="font-label-sm text-label-sm">Wiki</span>
+</button>
+</nav>
+<script>
+        // Simple filter chip toggle logic
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                document.querySelectorAll('.filter-chip').forEach(c => {
+                    c.classList.remove('active', 'bg-primary-container', 'text-on-primary-container');
+                    c.classList.add('bg-surface-container-lowest', 'text-on-surface');
+                });
+                this.classList.remove('bg-surface-container-lowest', 'text-on-surface');
+                this.classList.add('active', 'bg-primary-container', 'text-on-primary-container');
+            });
+        });
+    </script>
+</body></html>

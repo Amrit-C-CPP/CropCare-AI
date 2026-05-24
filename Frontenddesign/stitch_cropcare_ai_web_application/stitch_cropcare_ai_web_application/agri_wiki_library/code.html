@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agri-Wiki - CropCare AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7fbe8",
+                        "primary-fixed-dim": "#91db2a",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e0e5d2",
+                        "on-primary-container": "#315200",
+                        "secondary": "#2e6a41",
+                        "background": "#f7fbe8",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f1f6e3",
+                        "on-background": "#181d12",
+                        "on-secondary-container": "#347047",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#416900",
+                        "on-secondary-fixed": "#00210d",
+                        "secondary-fixed-dim": "#96d5a3",
+                        "surface-container": "#ebf0dd",
+                        "tertiary": "#97339a",
+                        "inverse-on-surface": "#eef3e0",
+                        "tertiary-container": "#ff90fd",
+                        "surface-dim": "#d7dcca",
+                        "tertiary-fixed": "#ffd6f8",
+                        "on-secondary-fixed-variant": "#12512c",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e0e5d2",
+                        "surface-container-high": "#e6ead8",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#424936",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#7d1883",
+                        "outline": "#727a64",
+                        "on-primary-fixed": "#102000",
+                        "primary-container": "#84cc16",
+                        "surface-tint": "#416900",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#181d12",
+                        "inverse-surface": "#2d3226",
+                        "inverse-primary": "#91db2a",
+                        "on-tertiary-fixed-variant": "#7b1480",
+                        "primary-fixed": "#acf847",
+                        "outline-variant": "#c1cab0",
+                        "tertiary-fixed-dim": "#ffa9fa",
+                        "secondary-container": "#b1f2be",
+                        "surface": "#f7fbe8",
+                        "on-primary-fixed-variant": "#304f00",
+                        "secondary-fixed": "#b1f2be",
+                        "on-tertiary-fixed": "#37003b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "32px",
+                        "base": "8px",
+                        "section-gap": "64px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "headline-md": ["Outfit"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(231, 229, 228, 0.5);
+        }
+        .ambient-shadow {
+            box-shadow: 0 10px 30px -10px rgba(65, 105, 0, 0.08);
+        }
+        .glow-line {
+            filter: drop-shadow(0 0 8px rgba(132, 204, 22, 0.4));
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen pt-20 pb-28 md:pb-12">
+<!-- Top Navigation (Desktop) -->
+<nav class="hidden md:flex bg-white/70 backdrop-blur-xl docked full-width top-0 border-b border-outline-variant/30 shadow-sm fixed left-0 w-full z-50 justify-between items-center px-container-padding h-16">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">CropCare AI</span>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/20 transition-all duration-300 px-3 py-1 rounded-md flex items-center gap-2" href="#">Scanner</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/20 transition-all duration-300 px-3 py-1 rounded-md flex items-center gap-2" href="#">History</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 hover:bg-primary-container/20 transition-all duration-300 px-3 py-1 flex items-center gap-2" href="#">Wiki</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="h-10 pl-10 pr-4 rounded-full bg-surface-container-highest border-none focus:ring-2 focus:ring-primary w-64 text-sm" placeholder="Search the Wiki..." type="text"/>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 md:px-container-padding">
+<!-- Header & Search (Mobile) -->
+<header class="md:hidden flex flex-col gap-4 mb-8">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Wiki</h1>
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full h-12 pl-12 pr-4 rounded-full bg-surface-container-highest border-none focus:ring-2 focus:ring-primary text-body-md" placeholder="Search crops, diseases..." type="text"/>
+</div>
+</header>
+<div class="md:hidden flex gap-2 overflow-x-auto pb-4 mb-4 scrollbar-hide">
+<button class="px-4 py-2 rounded-full bg-primary text-on-primary whitespace-nowrap text-sm font-semibold">All Topics</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-highest text-on-surface-variant whitespace-nowrap text-sm">Crop Guides</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-highest text-on-surface-variant whitespace-nowrap text-sm">Pest Control</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-highest text-on-surface-variant whitespace-nowrap text-sm">Soil Health</button>
+</div>
+<!-- Featured Article Bento Grid -->
+<section class="mb-section-gap">
+<h2 class="font-headline-md text-headline-md text-on-background mb-6">Featured Insights</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Main Feature -->
+<article class="md:col-span-2 relative rounded-lg overflow-hidden group cursor-pointer h-80 ambient-shadow">
+<img alt="Corn field at sunset" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A sweeping, cinematic view of a healthy cornfield at golden hour. The setting sun casts a warm, luminous glow across the green stalks, highlighting their vitality. The aesthetic is modern and vibrant, utilizing high-contrast lighting to emphasize growth and precision agriculture. The overall mood is optimistic and technologically advanced, fitting a high-tech agricultural portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw9xU9BYC8H6T5ge7tA82JL280rkaCQrHxz-H_-uhLFrGWWSChFWXq1JQ1X2UZjube450NPHm7rEtJhIK4UbntLO_tOd7vzqZvN2XjufAn_alxArLl8YQeJc1l_n-aYh2voq0NY2cDvbBHyYvam5RRA1PX7RLBMho0hTUplIz-AM3Ietggs4MlxjNTXLhA1p5k0AfTboJeI2PsaxSc_JeJJ_kEtd7EFrzDN9_-x8ycqLyERJzRCWSEwU85UcwGwVUv4mT8buhrCJ4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<span class="inline-block px-3 py-1 rounded-full bg-primary-container text-on-primary-container text-xs font-bold mb-3">Disease Prevention</span>
+<h3 class="font-headline-lg text-headline-lg text-white mb-2 group-hover:text-primary-fixed-dim transition-colors">Early Detection of Corn Smut using AI</h3>
+<p class="text-white/80 font-body-md line-clamp-2 max-w-2xl">Learn how advanced visual recognition models are identifying Ustilago maydis infections weeks before visual symptoms appear to the human eye, saving entire yields.</p>
+</div>
+</article>
+<!-- Side Features -->
+<div class="flex flex-col gap-6">
+<article class="flex-1 bg-surface-container-lowest rounded-lg p-6 border border-outline-variant/30 ambient-shadow hover:glass-panel transition-all duration-300 cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 rounded-full bg-surface-variant text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">water_drop</span>
+</span>
+<span class="text-xs text-on-surface-variant">5 min read</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-background mb-2">Optimizing Drip Irrigation</h4>
+<p class="text-on-surface-variant font-body-md text-sm line-clamp-2">A comprehensive guide to sensor-based watering schedules for arid climates.</p>
+</article>
+<article class="flex-1 bg-primary text-on-primary rounded-lg p-6 ambient-shadow hover:-translate-y-1 transition-transform duration-300 cursor-pointer relative overflow-hidden">
+<div class="absolute right-0 top-0 opacity-10 transform translate-x-4 -translate-y-4">
+<span class="material-symbols-outlined text-[120px]">psychiatry</span>
+</div>
+<span class="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold mb-4 backdrop-blur-md">Expert Tip</span>
+<h4 class="font-headline-md text-headline-md mb-2">Nitrogen Fixing Tactics</h4>
+<p class="text-white/80 font-body-md text-sm line-clamp-2">Rotate with specific legumes to naturally restore nitrogen levels without synthetic inputs.</p>
+</article>
+</div>
+</div>
+</section>
+<!-- Categories -->
+<section class="mb-section-gap">
+<div class="flex justify-between items-end mb-6">
+<h2 class="font-headline-md text-headline-md text-on-background">Browse Database</h2>
+<a class="text-primary font-semibold hover:underline hidden md:block" href="#">View All</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+<!-- Category Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-6 flex flex-col items-center justify-center text-center ambient-shadow hover:glass-panel hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary text-3xl">grass</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-background">Crops &amp; Yields</h3>
+<p class="text-sm text-on-surface-variant mt-1">420 Articles</p>
+</div>
+<!-- Category Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-6 flex flex-col items-center justify-center text-center ambient-shadow hover:glass-panel hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary text-3xl">bug_report</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-background">Pest Control</h3>
+<p class="text-sm text-on-surface-variant mt-1">156 Articles</p>
+</div>
+<!-- Category Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-6 flex flex-col items-center justify-center text-center ambient-shadow hover:glass-panel hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary text-3xl">coronavirus</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-background">Diseases</h3>
+<p class="text-sm text-on-surface-variant mt-1">89 Articles</p>
+</div>
+<!-- Category Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-6 flex flex-col items-center justify-center text-center ambient-shadow hover:glass-panel hover:-translate-y-1 transition-all duration-300 cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary text-3xl">cloud</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-background">Climate Prep</h3>
+<p class="text-sm text-on-surface-variant mt-1">204 Articles</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation (Mobile) -->
+<nav class="md:hidden bg-white/80 backdrop-blur-xl docked full-width bottom-0 rounded-t-lg border-t border-outline-variant/20 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] fixed left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 w-16 h-16 rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">qr_code_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 w-16 h-16 rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">history</span>
+<span class="font-label-sm text-label-sm">History</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 Active: scale-110 transition-transform duration-200 w-16 h-16" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">book_2</span>
+<span class="font-label-sm text-label-sm">Wiki</span>
+</a>
+</nav>
+</body></html>

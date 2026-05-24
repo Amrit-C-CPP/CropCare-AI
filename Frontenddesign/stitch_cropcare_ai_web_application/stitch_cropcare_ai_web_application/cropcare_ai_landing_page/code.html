@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CropCare AI</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#f7fbe8",
+                      "primary-fixed-dim": "#91db2a",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#e0e5d2",
+                      "on-primary-container": "#315200",
+                      "secondary": "#2e6a41",
+                      "background": "#f7fbe8",
+                      "error": "#ba1a1a",
+                      "surface-container-low": "#f1f6e3",
+                      "on-background": "#181d12",
+                      "on-secondary-container": "#347047",
+                      "surface-container-lowest": "#ffffff",
+                      "primary": "#416900",
+                      "on-secondary-fixed": "#00210d",
+                      "secondary-fixed-dim": "#96d5a3",
+                      "surface-container": "#ebf0dd",
+                      "tertiary": "#97339a",
+                      "inverse-on-surface": "#eef3e0",
+                      "tertiary-container": "#ff90fd",
+                      "surface-dim": "#d7dcca",
+                      "tertiary-fixed": "#ffd6f8",
+                      "on-secondary-fixed-variant": "#12512c",
+                      "on-primary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-container-highest": "#e0e5d2",
+                      "surface-container-high": "#e6ead8",
+                      "error-container": "#ffdad6",
+                      "on-surface-variant": "#424936",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-container": "#7d1883",
+                      "outline": "#727a64",
+                      "on-primary-fixed": "#102000",
+                      "primary-container": "#84cc16",
+                      "surface-tint": "#416900",
+                      "on-tertiary": "#ffffff",
+                      "on-surface": "#181d12",
+                      "inverse-surface": "#2d3226",
+                      "inverse-primary": "#91db2a",
+                      "on-tertiary-fixed-variant": "#7b1480",
+                      "primary-fixed": "#acf847",
+                      "outline-variant": "#c1cab0",
+                      "tertiary-fixed-dim": "#ffa9fa",
+                      "secondary-container": "#b1f2be",
+                      "surface": "#f7fbe8",
+                      "on-primary-fixed-variant": "#304f00",
+                      "secondary-fixed": "#b1f2be",
+                      "on-tertiary-fixed": "#37003b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "32px",
+                      "base": "8px",
+                      "section-gap": "64px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": [
+                              "Outfit"
+                      ],
+                      "display-lg": [
+                              "Outfit"
+                      ],
+                      "headline-lg": [
+                              "Outfit"
+                      ],
+                      "headline-md": [
+                              "Outfit"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Ambient shadows and glows per design system */
+        .ambient-shadow {
+            box-shadow: 0 12px 32px -8px rgba(65, 105, 0, 0.15); /* Primary color shadow */
+        }
+        .glow-line {
+            filter: drop-shadow(0 0 8px rgba(132, 204, 22, 0.6)); /* Primary container glow */
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        
+        /* Ensure inputs remove default styles well */
+        input:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col font-body-md text-body-md">
+<!-- TopNavBar (Desktop) -->
+<header class="hidden md:flex fixed top-0 left-0 w-full z-50 justify-between items-center px-container-padding h-16 bg-white/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm transition-all duration-300 hover:bg-white/90">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">CropCare AI</span>
+<nav class="flex items-center gap-6">
+<!-- Active State (Scanner) -->
+<a class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary pb-1 hover:bg-primary-container/20 transition-all duration-300 px-2 rounded-t-sm" href="#">Scanner</a>
+<!-- Inactive States -->
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/20 duration-300 px-2 py-1 rounded-sm" href="#">History</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/20 duration-300 px-2 py-1 rounded-sm" href="#">Wiki</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<!-- Search Bar (on_right) -->
+<div class="relative hidden lg:block group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant/50 rounded-full focus:border-primary-container focus:ring-2 focus:ring-primary-container/50 transition-all w-64" placeholder="Search insights..." type="text"/>
+</div>
+<button class="text-primary hover:bg-primary-container/20 transition-all duration-300 p-2 rounded-full Active:scale-95 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-8 md:pt-24 pb-32 md:pb-32 px-6 md:px-container-padding max-w-[1440px] mx-auto w-full space-y-section-gap">
+<!-- Hero Section -->
+<section class="relative w-full rounded-xl overflow-hidden min-h-[500px] flex items-center bg-surface-container-lowest border border-outline-variant/20 ambient-shadow">
+<!-- Background Image -->
+<div class="absolute inset-0 z-0">
+<img alt="Precision Agriculture Field" class="w-full h-full object-cover object-center opacity-90" data-alt="A sweeping, bright aerial view of a meticulously organized agricultural field in the early morning light. The scene embodies 'High-Tech Vitality', featuring crisp, organic greens contrasted with subtle, bioluminescent lime-green data visualization lines superimposed over the crops. The lighting is optimistic and airy, perfectly suiting a modern light-mode UI aesthetic that bridges natural growth with clinical technological precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvfrV3W4VXVlSezI-sxMeVGgZbtBr7eF3firsiU9UmVhKqyXKd5ST6WJS5gdYT62DHbXSnRTir4_J8FVU0kfYr4qYzX8Z0fVoNkyAB5IHaArcict_rYeEyIjLIWsTTzlFmwlwLNiSQuGn34vYw1RKx5S-OnJDSJ6GywyfGhmKkPJhMuhGgsIP1KFoI_ye0vk-jEvZQsUewDj2RMNY4vQjLV9cMOQUzjbczrIxBm6l5wTJnGwupPSthp7au04uGri8-6bqRxIxutUM"/>
+<!-- Soft gradient overlay to ensure text readability -->
+<div class="absolute inset-0 bg-gradient-to-r from-surface-bright/95 via-surface-bright/70 to-transparent"></div>
+</div>
+<!-- Hero Content -->
+<div class="relative z-10 p-8 md:p-16 max-w-2xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-primary-container/20 border border-primary-container/30 rounded-full mb-6">
+<span class="material-symbols-outlined text-primary-fixed-dim text-sm" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Precision Diagnostics</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-6">
+                    Cultivate intelligence.<br/>Harvest certainty.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-lg">
+                    Instantly analyze crop health, identify anomalies, and optimize your yield with advanced AI vision technology. Nature meets precision.
+                </p>
+<!-- Glassmorphism Quick Scan CTA -->
+<div class="glass-card p-4 rounded-full border border-white/40 shadow-lg inline-flex items-center gap-4 pr-6">
+<button class="bg-primary-container hover:bg-[#91db2a] hover:scale-[1.02] transition-all duration-300 text-on-primary-container font-body-md text-body-md font-bold py-4 px-8 rounded-full flex items-center gap-3 shadow-[0_4px_14px_rgba(132,204,22,0.3)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">qr_code_scanner</span>
+                        Start Quick Scan
+                    </button>
+<span class="font-body-md text-body-md text-on-surface-variant hidden sm:inline-block">Drop an image or tap to capture</span>
+</div>
+</div>
+</section>
+<!-- Core Services Bento Grid -->
+<section class="space-y-8">
+<div class="flex flex-col md:flex-row justify-between items-end gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Core Services</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">The tools you need for data-driven agriculture.</p>
+</div>
+<button class="text-primary font-body-md text-body-md font-semibold flex items-center gap-1 hover:underline underline-offset-4">
+                    View all capabilities <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- AI Scanner Card (Spans 2 columns on desktop) -->
+<a class="md:col-span-2 group relative bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-8 overflow-hidden hover:ambient-shadow transition-all duration-500 flex flex-col justify-between min-h-[320px]" href="#">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary-container/20 transition-colors duration-500"></div>
+<div class="relative z-10 flex justify-between items-start mb-12">
+<div class="p-4 bg-primary/5 rounded-2xl group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">qr_code_scanner</span>
+</div>
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm rounded-full">Real-time</span>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3 group-hover:text-primary transition-colors">AI Scanner</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+                            Utilize our proprietary vision models to instantly detect pests, nutrient deficiencies, and diseases down to the leaf level.
+                        </p>
+</div>
+<!-- Decorative scanning line effect -->
+<div class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+<div class="w-full h-1 bg-primary-container glow-line absolute top-1/2 -translate-y-1/2 animate-[scan_2s_ease-in-out_infinite]"></div>
+</div>
+</a>
+<style>
+                    @keyframes scan {
+                        0% { top: 0; opacity: 0; }
+                        10% { opacity: 1; }
+                        90% { opacity: 1; }
+                        100% { top: 100%; opacity: 0; }
+                    }
+                </style>
+<!-- History Card -->
+<a class="group relative bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-8 hover:ambient-shadow transition-all duration-500 flex flex-col justify-between min-h-[320px]" href="#">
+<div class="relative z-10 mb-12">
+<div class="inline-block p-4 bg-surface-variant/50 rounded-2xl group-hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">history</span>
+</div>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3 group-hover:text-primary transition-colors">History</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Review past analyses, track intervention effectiveness, and monitor field health trends over entire seasons.
+                        </p>
+</div>
+</a>
+<!-- Wiki Card (Moves to next row implicitly in grid) -->
+<a class="md:col-start-3 group relative bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-8 hover:ambient-shadow transition-all duration-500 flex flex-col justify-between min-h-[320px]" href="#">
+<div class="relative z-10 mb-12">
+<div class="inline-block p-4 bg-surface-variant/50 rounded-2xl group-hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">book_2</span>
+</div>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3 group-hover:text-primary transition-colors">Wiki</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Access our comprehensive, continuously updated database of crop profiles, known pathogens, and treatment protocols.
+                        </p>
+</div>
+</a>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="flex md:hidden fixed bottom-0 left-0 w-full z-50 justify-around items-center h-20 pb-safe px-6 bg-white/80 backdrop-blur-xl border-t border-outline-variant/20 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<!-- Active State (Scanner) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 hover:bg-surface-variant/50 Active:scale-110 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">qr_code_scanner</span>
+<span class="font-label-sm text-label-sm">Scanner</span>
+</a>
+<!-- Inactive State (History) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 Active:scale-110 transition-all duration-200 px-4 py-1 rounded-full" href="#">
+<span class="material-symbols-outlined mb-1">history</span>
+<span class="font-label-sm text-label-sm">History</span>
+</a>
+<!-- Inactive State (Wiki) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 Active:scale-110 transition-all duration-200 px-4 py-1 rounded-full" href="#">
+<span class="material-symbols-outlined mb-1">book_2</span>
+<span class="font-label-sm text-label-sm">Wiki</span>
+</a>
+</nav>
+</body></html>
