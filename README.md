@@ -1,30 +1,4 @@
-<p align="center">
-  <img src="public/logo.png" alt="CropCare AI Logo" width="96" height="96" style="border-radius: 12px;" />
-</p>
-
-<h1 align="center">CropCare AI 🌿</h1>
-
-<p align="center">
-  An AI-powered web application for early and accurate crop disease detection using custom-trained machine learning models. Empowering farmers to ensure healthier yields.
-</p>
-
-<p align="center">
-  <a href="https://github.com/YOUR_USERNAME/CropCare_AI/issues/new?labels=bug">Report Bug</a>
-  ·
-  <a href="https://github.com/YOUR_USERNAME/CropCare_AI/issues/new?labels=enhancement">Request Feature</a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/YOUR_USERNAME/CropCare_AI/stargazers">
-    <img src="https://img.shields.io/github/stars/YOUR_USERNAME/CropCare_AI?style=for-the-badge&labelColor=1a1a2e&color=4f8ef7&label=STARS" alt="Stars" />
-  </a>
-  <a href="https://github.com/YOUR_USERNAME/CropCare_AI/forks">
-    <img src="https://img.shields.io/github/forks/YOUR_USERNAME/CropCare_AI?style=for-the-badge&labelColor=1a1a2e&color=4f8ef7&label=FORKS" alt="Forks" />
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/LICENSE-MIT-brightgreen?style=for-the-badge&labelColor=1a1a2e" alt="License" />
-  </a>
-</p>
+## CropCare AI 🌿
 
 > **Empowering farmers with the world’s most advanced digital agronomy tools.**
 
