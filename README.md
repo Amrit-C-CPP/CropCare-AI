@@ -34,7 +34,6 @@ KrishiSalakar/
 │   ├── main.py             # FastAPI server entry point
 │   ├── model/              # Contains the PyTorch model (.pth) and class definitions
 │   └── requirements.txt    # Python dependencies
-├── Frontenddesign/         # Original UI/UX templates & mockups (Stitch generated)
 └── supabase_schema.sql     # Database schema for Supabase
 ```
 
