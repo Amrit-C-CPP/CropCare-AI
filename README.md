@@ -13,16 +13,14 @@ CropCare AI is a comprehensive precision agriculture application designed to hel
 
 ## 🛠️ Technology Stack
 
-**Frontend:**
-- [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
-- [Tailwind CSS v4](https://tailwindcss.com/) for unified styling
-- [React Router](https://reactrouter.com/) for client-side navigation
-- [Supabase](https://supabase.com/) for authentication (Google OAuth)
+| Category | Technology |
+| :--- | :--- |
+| **Frontend** | [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev) [![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)](https://reactrouter.com/) |
+| **Backend** | [![Python 3](https://img.shields.io/badge/Python_3-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) |
+| **AI / ML** | [![PyTorch (ResNet18)](https://img.shields.io/badge/PyTorch_(ResNet18)-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/) [![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/) [![Pillow](https://img.shields.io/badge/Pillow-333333?style=for-the-badge&logo=python&logoColor=white)](https://python-pillow.org/) |
+| **Core UI** | [![Vite](https://img.shields.io/badge/Vite-B73CE4?style=for-the-badge&logo=vite&logoColor=FFD62E)](https://vitejs.dev/) [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) |
+| **Infra** | [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/) |
 
-**Backend:**
-- [Python 3](https://www.python.org/) + [FastAPI](https://fastapi.tiangolo.com/)
-- [PyTorch](https://pytorch.org/) (ResNet18) for image classification
-- [Pillow](https://pillow.readthedocs.io/) & [NumPy](https://numpy.org/) for image processing
 
 ## 📂 Project Structure
 
