@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 
 export default function DiagnosticHub() {
   /* camera state */
@@ -28,7 +29,7 @@ export default function DiagnosticHub() {
     try {
       const constraints = {
         video: {
-          facingMode: isMobile ? { ideal: facing } : { exact: 'user' },
+          ...(isMobile ? { facingMode: { ideal: facing } } : {}),
           width: { ideal: 1280 },
           height: { ideal: 720 },
         },
@@ -116,8 +117,14 @@ export default function DiagnosticHub() {
       const formData = new FormData();
       formData.append('file', blob, 'capture.jpg');
 
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
+
       const response = await fetch('http://localhost:8000/api/diagnose', {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
         body: formData,
       });
 
@@ -202,10 +209,16 @@ export default function DiagnosticHub() {
           </div>
           
           {/* Viewfinder */}
-          <div className="relative w-full max-w-lg aspect-[3/4] md:aspect-square bg-surface-container rounded-xl overflow-hidden border border-outline-variant/30 shadow-[0_8px_32px_rgba(65,105,0,0.1)] group">
+          <div className="relative w-full max-w-lg aspect-[4/3] bg-surface-container rounded-2xl overflow-hidden border border-outline-variant/30 shadow-[0_8px_32px_rgba(65,105,0,0.1)] group">
             
             {capturedImage ? (
-              <img alt="Captured" className="absolute inset-0 w-full h-full object-cover" src={capturedImage}/>
+              <img alt="Captured" className="absolute inset-0 w-full h-full object-contain bg-black/5" src={capturedImage}/>
+            ) : cameraError ? (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface-variant/30 text-on-surface-variant z-30 p-8 text-center">
+                <span className="material-symbols-outlined text-6xl text-outline-variant mb-4">no_photography</span>
+                <h3 className="font-headline-sm mb-2 text-on-surface">Camera Unavailable</h3>
+                <p className="font-body-md text-sm opacity-80 mb-6">{cameraError}</p>
+              </div>
             ) : (
               <video ref={videoRef} autoPlay playsInline muted className={`absolute inset-0 w-full h-full object-cover ${facingMode === 'user' ? 'scale-x-[-1]' : ''}`} />
             )}
@@ -229,39 +242,32 @@ export default function DiagnosticHub() {
             {scanning && (
               <div className="absolute inset-0 bg-surface-container/60 backdrop-blur-sm flex flex-col items-center justify-center z-20">
                 <span className="material-symbols-outlined text-primary-container text-6xl animate-pulse mb-4">memory</span>
-                <p className="font-body-lg text-body-lg text-on-surface font-semibold bg-white/80 px-6 py-2 rounded-full shadow-sm">Analyzing leaf texture...</p>
-              </div>
-            )}
-            
-            {cameraError && !capturedImage && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white z-30 p-4 text-center">
-                {cameraError}
+                <p className="font-body-lg text-body-lg text-on-surface font-semibold bg-white/80 px-6 py-2 rounded-full shadow-sm">Analyzing image...</p>
               </div>
             )}
           </div>
     
           {/* Controls */}
-          <div className="flex items-center justify-center gap-6 mt-8 w-full max-w-lg">
-            <button onClick={triggerUpload} className="flex flex-col items-center justify-center w-14 h-14 bg-surface-container rounded-full text-on-surface-variant hover:bg-surface-variant transition-colors border border-outline-variant/50">
-              <span className="material-symbols-outlined">image</span>
-            </button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 w-full max-w-lg px-4">
             <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
-    
-            <button onClick={handleScanAction} disabled={scanning} className="relative group flex items-center justify-center w-20 h-20 bg-primary-container text-on-primary-container rounded-full shadow-lg hover:scale-[1.02] hover:bg-[#7bc214] transition-all duration-200 z-30 cursor-pointer">
-              <div className="absolute inset-0 rounded-full border-4 border-primary/20 scale-110"></div>
+            
+            <button onClick={triggerUpload} className="w-full sm:w-auto flex flex-1 items-center justify-center gap-2 px-6 py-3 bg-surface-container rounded-full text-on-surface hover:bg-surface-variant transition-colors border border-outline-variant/50 font-label-lg font-semibold">
+              <span className="material-symbols-outlined">image</span>
+              Upload Gallery
+            </button>
+            
+            <button onClick={handleScanAction} disabled={scanning} className="w-full sm:w-auto flex flex-1 items-center justify-center gap-2 px-8 py-3 bg-primary-container text-on-primary-container rounded-full shadow-md hover:scale-[1.02] hover:bg-[#7bc214] transition-all duration-200 z-30 cursor-pointer font-label-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
               {capturedImage && result ? (
-                <span className="material-symbols-outlined text-3xl">refresh</span>
+                <><span className="material-symbols-outlined">refresh</span> Reset</>
               ) : (
-                <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>camera</span>
+                <><span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>camera</span> Take Photo</>
               )}
             </button>
     
-            {flipSupported && !capturedImage ? (
-              <button onClick={flipCamera} className="flex flex-col items-center justify-center w-14 h-14 bg-surface-container rounded-full text-on-surface-variant hover:bg-surface-variant transition-colors border border-outline-variant/50">
+            {flipSupported && !capturedImage && (
+              <button onClick={flipCamera} className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-surface-container rounded-full text-on-surface hover:bg-surface-variant transition-colors border border-outline-variant/50 font-label-lg font-semibold">
                 <span className="material-symbols-outlined">flip_camera_ios</span>
               </button>
-            ) : (
-              <div className="w-14 h-14"></div>
             )}
           </div>
         </div>
