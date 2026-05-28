@@ -7,11 +7,13 @@ import torch.nn as nn
 from torchvision import models, transforms
 from PIL import Image
 from typing import List, Optional
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from supabase import create_client, Client
 from dotenv import load_dotenv
+from transformers import CLIPProcessor, CLIPModel
 
 load_dotenv()
 
@@ -37,6 +39,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+security = HTTPBearer()
+
+def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Verifies the JWT token using Supabase Auth"""
+    if not supabase:
+        raise HTTPException(status_code=500, detail="Supabase client is not initialized")
+    
+    token = credentials.credentials
+    try:
+        user_response = supabase.auth.get_user(token)
+        if not user_response or not user_response.user:
+            raise HTTPException(status_code=401, detail="Invalid authentication token")
+        return user_response.user
+    except Exception as e:
+        raise HTTPException(status_code=401, detail=f"Authentication failed: {str(e)}")
 
 # ---- Models ----
 class DiseaseBase(BaseModel):
@@ -190,8 +208,21 @@ else:
 ]
 num_classes = len(class_names)
 
-# Initialize ResNet18 model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Initialize CLIP model for OOD (Out-of-Distribution) detection
+try:
+    print("Loading CLIP model...")
+    clip_model_name = "openai/clip-vit-base-patch32"
+    clip_model = CLIPModel.from_pretrained(clip_model_name).to(device)
+    clip_processor = CLIPProcessor.from_pretrained(clip_model_name)
+    print("Successfully loaded CLIP model.")
+except Exception as e:
+    print(f"Error loading CLIP model: {e}")
+    clip_model = None
+    clip_processor = None
+
+# Initialize ResNet18 model
 model = models.resnet18(weights=None)
 num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs, num_classes)
@@ -216,6 +247,30 @@ def run_inference_service(image_bytes: bytes) -> PredictionResponse:
     """
     try:
         image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        
+        # --- OOD Check with CLIP ---
+        if clip_model is not None and clip_processor is not None:
+            candidate_labels = ["a photo of a plant leaf", "a photo of a person", "a photo of an animal", "a photo of a random object or background"]
+            inputs = clip_processor(text=candidate_labels, images=image, return_tensors="pt", padding=True)
+            inputs = {k: v.to(device) for k, v in inputs.items()}
+            
+            with torch.no_grad():
+                clip_outputs = clip_model(**inputs)
+                logits_per_image = clip_outputs.logits_per_image
+                probs = logits_per_image.softmax(dim=1)
+                
+            top_prob, top_idx = probs[0].max(dim=0)
+            best_label = candidate_labels[top_idx.item()]
+            
+            if top_idx.item() != 0:
+                print(f"Rejected by CLIP. Predicted: {best_label} (Prob: {top_prob.item():.2f})")
+                return PredictionResponse(
+                    predicted_disease_name="No Crop Found",
+                    confidence_score=round(top_prob.item() * 100, 2),
+                    symptoms=[f"Image appears to be {best_label.replace('a photo of ', '')}."],
+                    recommended_action=["Please upload a clear image of a plant leaf or crop."]
+                )
+
         input_tensor = val_test_transforms(image).unsqueeze(0).to(device)
         
         with torch.no_grad():
@@ -244,7 +299,7 @@ def run_inference_service(image_bytes: bytes) -> PredictionResponse:
 # ---- Routes ----
 
 @app.get("/api/wiki/diseases", response_model=List[DiseaseBase])
-def get_all_diseases():
+def get_all_diseases(user=Depends(verify_token)):
     """
     Fetches all diseases from the Supabase crop_diseases table.
     """
@@ -255,7 +310,7 @@ def get_all_diseases():
     return response.data
 
 @app.get("/api/wiki/diseases/{id}", response_model=DiseaseBase)
-def get_disease(id: str):
+def get_disease(id: str, user=Depends(verify_token)):
     """
     Fetches the specific blog/details for a single disease from Supabase.
     """
@@ -269,7 +324,7 @@ def get_disease(id: str):
     return response.data[0]
 
 @app.post("/api/diagnose", response_model=PredictionResponse)
-async def diagnose_crop(file: UploadFile = File(...)):
+async def diagnose_crop(file: UploadFile = File(...), user=Depends(verify_token)):
     """
     Accepts a multipart form-data image upload.
     Processes the image through the PyTorch ResNet18 computer vision model.
