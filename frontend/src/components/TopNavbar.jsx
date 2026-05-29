@@ -1,63 +1,69 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const TopNavbar = () => {
   const { user, signOut } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     await signOut();
+    navigate('/auth', { replace: true });
   };
 
   const isActive = (path) => location.pathname === path;
 
-  return (
-    <nav className="hidden md:flex fixed top-0 w-full h-[72px] bg-white/80 backdrop-blur-md dark:bg-surface-container/80 border-b border-outline-variant shadow-sm z-50 justify-between items-center px-gutter max-w-container-max mx-auto">
-      <div className="flex items-center gap-md">
-        <Link to="/" className="font-display text-headline-md font-bold text-primary dark:text-primary-fixed">
-          🌿 CropCare AI
-        </Link>
-      </div>
+  const linkBase = 'flex items-center h-full px-3 text-sm font-semibold transition-all duration-200 border-b-2';
+  const activeLink = `${linkBase} text-primary border-primary`;
+  const inactiveLink = `${linkBase} text-on-surface-variant border-transparent hover:text-primary hover:border-primary/40`;
 
-      <div className="flex items-center gap-lg">
-        <Link 
-          to="/diagnostic-hub" 
-          className={`font-display text-body-md font-bold transition-colors duration-200 ${isActive('/diagnostic-hub') ? 'text-primary dark:text-primary-fixed border-b-2 border-primary pb-1' : 'text-on-surface-variant dark:text-on-surface-variant hover:text-primary'}`}
-        >
+  return (
+    <header className="fixed top-0 left-0 right-0 w-full h-16 bg-white/85 backdrop-blur-xl border-b border-outline-variant/40 shadow-sm z-50 flex items-center justify-between px-4 md:px-8">
+      {/* Logo */}
+      <Link to="/" className="flex items-center gap-2">
+        <span className="material-symbols-outlined text-primary text-3xl">psychiatry</span>
+        <span className="font-headline-md text-headline-md font-bold text-primary">CropCare AI</span>
+      </Link>
+
+      {/* Center Nav Links */}
+      <nav className="hidden md:flex items-center h-full gap-1">
+        <Link to="/diagnostic-hub" className={isActive('/diagnostic-hub') ? activeLink : inactiveLink}>
           Scanner
         </Link>
-        <Link 
-          to="/history" 
-          className={`font-display text-body-md font-bold transition-colors duration-200 ${isActive('/history') ? 'text-primary dark:text-primary-fixed border-b-2 border-primary pb-1' : 'text-on-surface-variant dark:text-on-surface-variant hover:text-primary'}`}
-        >
+        <Link to="/history" className={isActive('/history') ? activeLink : inactiveLink}>
           History
         </Link>
-        <Link 
-          to="/wiki" 
-          className={`font-display text-body-md font-bold transition-colors duration-200 ${isActive('/wiki') ? 'text-primary dark:text-primary-fixed border-b-2 border-primary pb-1' : 'text-on-surface-variant dark:text-on-surface-variant hover:text-primary'}`}
-        >
+        <Link to="/wiki" className={isActive('/wiki') ? activeLink : inactiveLink}>
           Wiki
         </Link>
-      </div>
+      </nav>
 
-      <div className="flex items-center gap-sm">
+      {/* Right: User / Auth */}
+      <div className="flex items-center gap-2 shrink-0">
         {user ? (
           <>
-            <button onClick={handleSignOut} className="bg-surface-container hover:bg-surface-variant text-on-surface font-bold py-xs px-md rounded-full transition-all text-sm">
-              Sign Out
-            </button>
-            <div className="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant flex items-center justify-center font-bold text-primary">
+            <div className="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm border border-outline-variant/30">
               {user?.email?.[0]?.toUpperCase() || 'U'}
             </div>
+            <button
+              onClick={handleSignOut}
+              className="hidden sm:flex items-center gap-1 text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors px-3 py-1.5 rounded-full hover:bg-surface-container"
+            >
+              <span className="material-symbols-outlined text-base">logout</span>
+              <span>Sign Out</span>
+            </button>
           </>
         ) : (
-          <Link to="/auth" className="bg-[#166534] hover:bg-[#15803d] text-white font-bold py-xs px-md rounded-full transition-all">
+          <Link
+            to="/auth"
+            className="bg-primary text-on-primary text-sm font-bold py-1.5 px-4 rounded-full hover:opacity-90 transition-opacity"
+          >
             Login
           </Link>
         )}
       </div>
-    </nav>
+    </header>
   );
 };
 

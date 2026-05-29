@@ -14,6 +14,7 @@ from pydantic import BaseModel
 from supabase import create_client, Client
 from dotenv import load_dotenv
 from transformers import CLIPProcessor, CLIPModel
+from duckduckgo_search import DDGS
 
 load_dotenv()
 
@@ -351,8 +352,26 @@ def debug_classes():
         "classes": {str(i): name for i, name in enumerate(class_names)}
     }
 
+from duckduckgo_search import DDGS
+@app.get("/api/wiki/search")
+async def search_wiki(q: str, category: str = "All Topics"):
+    try:
+        results = []
+        search_query = q
+        if category and category != "All Topics":
+            search_query += f" {category}"
+            
+        with DDGS() as ddgs:
+            for r in ddgs.text(search_query, max_results=10):
+                results.append({
+                    "title": r.get("title"),
+                    "href": r.get("href"),
+                    "body": r.get("body")
+                })
+        return {"results": results}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 if __name__ == "__main__":
     import uvicorn
-    # Optional: read port from env, default 8000
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

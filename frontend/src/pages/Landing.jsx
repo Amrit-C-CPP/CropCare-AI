@@ -5,17 +5,18 @@ const Landing = () => {
   return (
     <div className="bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
       {/* TopNavBar */}
-      <header className="bg-white/70 dark:bg-surface-container/70 backdrop-blur-xl docked full-width top-0 border-b border-outline-variant/30 shadow-sm fixed left-0 w-full z-50 flex justify-between items-center px-container-padding h-16">
-        <div className="flex items-center gap-4">
+      <header className="bg-white shadow-md fixed left-0 top-0 w-full z-50 flex justify-between items-center px-4 md:px-8 h-16 border-b border-gray-200">
+        <div className="flex items-center gap-2">
+          <span className="text-2xl">🌿</span>
           <span className="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">CropCare AI</span>
         </div>
         <nav className="hidden md:flex gap-8 items-center">
-          <Link className="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:bg-primary-container/20 px-3 py-2 rounded-lg transition-all duration-300" to="/diagnostic-hub">Scanner</Link>
-          <Link className="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:bg-primary-container/20 px-3 py-2 rounded-lg transition-all duration-300" to="/history">History</Link>
-          <Link className="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:bg-primary-container/20 px-3 py-2 rounded-lg transition-all duration-300" to="/wiki">Wiki</Link>
+          <Link className="text-gray-800 font-semibold hover:text-green-600 transition-colors px-3 py-2 rounded-lg" to="/diagnostic-hub">Scanner</Link>
+          <Link className="text-gray-800 font-semibold hover:text-green-600 transition-colors px-3 py-2 rounded-lg" to="/history">History</Link>
+          <Link className="text-gray-800 font-semibold hover:text-green-600 transition-colors px-3 py-2 rounded-lg" to="/wiki">Wiki</Link>
         </nav>
         <div className="flex items-center">
-          <Link to="/auth" className="text-primary dark:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 p-2 rounded-full flex items-center justify-center">
+          <Link to="/auth" className="text-gray-800 hover:text-green-600 transition-colors p-2 rounded-full flex items-center justify-center">
             <span className="material-symbols-outlined">account_circle</span>
           </Link>
         </div>

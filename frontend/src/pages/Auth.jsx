@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { useAuth } from '../context/AuthContext';
+import authBg from '../assets/auth_background.png';
 
 const Auth = () => {
   const [loading, setLoading] = useState(false);
@@ -39,11 +40,11 @@ const Auth = () => {
   };
 
   return (
-    <div className="bg-surface-container-lowest font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
+    <div className="bg-surface-container-lowest font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen">
       <main className="min-h-screen flex w-full">
         {/* Left Screen: Imagery & Brand */}
         <section className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-surface-variant">
-          <img alt="Aerial view of precision agriculture fields" className="absolute inset-0 w-full h-full object-cover scale-105 transition-transform duration-[20s] ease-out hover:scale-100" src="https://lh3.googleusercontent.com/aida/ADBb0ugMmIiKXA0LfPKaNuz4G8OufjWwLtSVqxFO6MdkCDpgnNjR5woJcrsEIMkU_f2jXUntyadG7pEyWvj76zEOkGRgdrdZob5mapDXk6ensvKb7kLruq6KF2d4tHr3cT_mQCawslBDtWsjnzKDo8aUhCAoXmOBf_9YwQZ3vK3u2H690W1KB9kIBS5OoMFuNSV2kFLT5XKM0O6M4UT73Bbu5bdhEoUFazWq5BVZ8wrnSgEcTAs-TpkjvLqTsK4"/>
+          <img alt="Aerial view of precision agriculture fields" className="absolute inset-0 w-full h-full object-cover scale-105 transition-transform duration-[20s] ease-out hover:scale-100" src={authBg}/>
           {/* Subtle Dark Gradient Overlay for readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#181d12]/80 via-[#181d12]/20 to-transparent"></div>
           <div className="relative z-10 flex flex-col justify-between w-full h-full p-container-padding pb-section-gap">
@@ -68,15 +69,15 @@ const Auth = () => {
           <div className="w-full max-w-md relative z-10">
             {/* Header */}
             <header className="mb-12 text-center lg:text-left">
-              <h1 className="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mb-2 tracking-tight">
-                  CropCare AI
-              </h1>
-              <h2 className="font-headline-md text-headline-md text-on-surface mt-8 mb-2">
-                {isLoginTab ? 'Welcome Back' : 'Create Account'}
-              </h2>
-              <p className="font-body-md text-body-md text-on-surface-variant">
-                {isLoginTab ? 'Enter your credentials to access your dashboard.' : 'Sign up to start scanning crops.'}
-              </p>
+            <h1 className="text-2xl md:text-4xl font-bold text-primary mb-2 tracking-tight">
+                CropCare AI
+            </h1>
+            <h2 className="text-lg md:text-2xl font-semibold text-on-surface mt-6 mb-1">
+              {isLoginTab ? 'Welcome Back' : 'Create Account'}
+            </h2>
+            <p className="text-sm text-on-surface-variant">
+              {isLoginTab ? 'Enter your credentials to access your dashboard.' : 'Sign up to start scanning crops.'}
+            </p>
             </header>
 
             {error && <div className="mb-4 text-error text-sm text-center">{error}</div>}

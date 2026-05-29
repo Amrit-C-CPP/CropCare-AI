@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { useAuth } from '../context/AuthContext';
 
 export default function DiagnosticHub() {
   /* camera state */
@@ -17,6 +17,8 @@ export default function DiagnosticHub() {
   const [result, setResult] = useState(null);
   const [cameraError, setCameraError] = useState(null);
   const [flipSupported, setFlipSupported] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const { user } = useAuth();
 
   /* ── start / restart camera ─────────────────────────────── */
   const startCamera = useCallback(async (facing) => {
@@ -61,7 +63,7 @@ export default function DiagnosticHub() {
     setCameraOn(false);
   }, []);
 
-  useEffect(() => () => stopCamera(), [stopCamera]);
+  // Cleanup on unmount is handled in the startCamera useEffect
 
   /* ── flip camera ────────────────────────────────────────── */
   const flipCamera = () => {
@@ -141,6 +143,27 @@ export default function DiagnosticHub() {
     }
   };
 
+  const handleSaveReport = async () => {
+    if (!result || !user) return;
+    setIsSaving(true);
+    try {
+      const { error } = await supabase.from('scan_history').insert({
+        user_id: user.id,
+        crop_name: result.predicted_disease_name?.split('_')[0] || 'Unknown Crop',
+        disease_name: result.predicted_disease_name?.replace(/_/g, ' ') || 'Unknown',
+        confidence: result.confidence_score || 0,
+        image_url: capturedImage || null,
+        recommended_action: result.recommended_action || []
+      });
+      if (error) throw error;
+      alert("Report saved successfully!");
+    } catch(err) {
+      alert("Failed to save report: " + err.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const handleScanAction = () => {
     if (cameraError && !capturedImage) {
        alert("Camera is not available. Please upload an image instead.");
@@ -178,28 +201,21 @@ export default function DiagnosticHub() {
   };
 
   useEffect(() => {
-    startCamera(facingMode);
-  }, [startCamera, facingMode]);
+    let isMounted = true;
+    startCamera(facingMode).then(() => {
+      if (!isMounted) stopCamera();
+    });
+    return () => {
+      isMounted = false;
+      stopCamera();
+    };
+  }, [startCamera, facingMode, stopCamera]);
 
   return (
-    <div className="bg-background text-on-background font-body-md min-h-screen overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
-      {/* Top Navigation (Web) */}
-      <header className="hidden md:flex fixed top-0 left-0 w-full z-50 justify-between items-center px-container-padding h-16 bg-white/70 dark:bg-surface-container/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm transition-all duration-300">
-        <div className="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">CropCare AI</div>
-        <nav className="flex gap-8">
-          <Link className="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary pb-1 font-body-md text-body-md hover:bg-primary-container/20 transition-all duration-300 px-2 rounded-t-sm" to="/diagnostic-hub">Scanner</Link>
-          <Link className="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:bg-primary-container/20 duration-300 px-2 rounded-sm py-1" to="/history">History</Link>
-          <Link className="text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:bg-primary-container/20 duration-300 px-2 rounded-sm py-1" to="/wiki">Wiki</Link>
-        </nav>
-        <div className="flex items-center">
-          <Link to="/auth" className="p-2 hover:bg-primary-container/20 rounded-full transition-all duration-300 text-primary dark:text-primary-fixed-dim flex items-center justify-center">
-            <span className="material-symbols-outlined">account_circle</span>
-          </Link>
-        </div>
-      </header>
-    
+    <div className="min-h-screen">
+
       {/* Main Content */}
-      <main className="pt-20 md:pt-24 pb-32 md:pb-12 px-gutter md:px-container-padding max-w-7xl mx-auto flex flex-col md:flex-row gap-section-gap min-h-screen">
+      <main className="px-4 md:px-8 max-w-7xl mx-auto flex flex-col md:flex-row gap-8 py-6">
         {/* Left Column: Scanner View */}
         <div className="flex-1 flex flex-col items-center justify-center relative w-full">
           <div className="text-center mb-8 w-full">
@@ -342,7 +358,13 @@ export default function DiagnosticHub() {
                   </div>
     
                   <div className="mt-8 flex gap-4">
-                    <button className="flex-1 bg-white border-2 border-primary text-primary font-body-md text-body-md font-semibold py-3 rounded-full hover:bg-surface transition-colors text-center">Save Report</button>
+                    <button 
+                      onClick={handleSaveReport} 
+                      disabled={isSaving}
+                      className="flex-1 bg-white border-2 border-primary text-primary font-body-md text-body-md font-semibold py-3 rounded-full hover:bg-surface transition-colors text-center disabled:opacity-50"
+                    >
+                      {isSaving ? 'Saving...' : 'Save Report'}
+                    </button>
                     <button className="flex-1 bg-primary text-on-primary font-body-md text-body-md font-semibold py-3 rounded-full hover:scale-[1.02] transition-transform shadow-md text-center">Buy Treatment</button>
                   </div>
                 </>
@@ -355,22 +377,6 @@ export default function DiagnosticHub() {
           </div>
         )}
       </main>
-    
-      {/* Bottom Navigation (Mobile) */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-white/80 dark:bg-surface-container-high/80 backdrop-blur-xl border-t border-outline-variant/20 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] rounded-t-lg">
-        <Link className="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full px-4 py-1 scale-110 transition-transform duration-200" to="/diagnostic-hub">
-          <span className="material-symbols-outlined mb-1">qr_code_scanner</span>
-          <span className="font-label-sm text-label-sm">Scanner</span>
-        </Link>
-        <Link className="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant/50 rounded-lg p-2 transition-colors" to="/history">
-          <span className="material-symbols-outlined mb-1">history</span>
-          <span className="font-label-sm text-label-sm">History</span>
-        </Link>
-        <Link className="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant/50 rounded-lg p-2 transition-colors" to="/wiki">
-          <span className="material-symbols-outlined mb-1">book_2</span>
-          <span className="font-label-sm text-label-sm">Wiki</span>
-        </Link>
-      </nav>
     </div>
   );
 }
