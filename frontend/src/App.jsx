@@ -1,52 +1,30 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Landing from './pages/Landing';
 import DiagnosticHub from './pages/DiagnosticHub';
 import Wiki from './pages/Wiki';
 import Auth from './pages/Auth';
 import History from './pages/History';
+import Landing from './pages/Landing';
 import DiseaseDetail from './pages/DiseaseDetail';
 import MainLayout from './components/MainLayout';
 import ProtectedRoute from './components/ProtectedRoute';
-import { useAuth } from './context/AuthContext';
 
-const RootRedirect = () => {
-  const { user, loading } = useAuth();
-  if (loading) return null;
-  return user ? <Navigate to="/diagnostic-hub" replace /> : <Navigate to="/auth" replace />;
-};
+const ProtectedPage = ({ children }) => (
+  <ProtectedRoute>
+    <MainLayout>{children}</MainLayout>
+  </ProtectedRoute>
+);
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Make Auth the first screen implicitly by redirecting root */}
-        <Route path="/" element={<RootRedirect />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/auth" element={<Auth />} />
-        
-        {/* Optionally keep Landing accessible at /landing if they want to see it */}
-        <Route path="/landing" element={<Landing />} />
 
-        {/* Protected Routes */}
-        <Route path="/diagnostic-hub" element={
-          <ProtectedRoute>
-            <DiagnosticHub />
-          </ProtectedRoute>
-        } />
-        <Route path="/history" element={
-          <ProtectedRoute>
-            <History />
-          </ProtectedRoute>
-        } />
-        <Route path="/wiki" element={
-          <ProtectedRoute>
-            <Wiki />
-          </ProtectedRoute>
-        } />
-        <Route path="/disease/:id" element={
-          <ProtectedRoute>
-            <DiseaseDetail />
-          </ProtectedRoute>
-        } />
+        <Route path="/diagnostic-hub" element={<ProtectedPage><DiagnosticHub /></ProtectedPage>} />
+        <Route path="/history" element={<ProtectedPage><History /></ProtectedPage>} />
+        <Route path="/wiki" element={<ProtectedPage><Wiki /></ProtectedPage>} />
+        <Route path="/disease/:id" element={<ProtectedPage><DiseaseDetail /></ProtectedPage>} />
       </Routes>
     </BrowserRouter>
   );

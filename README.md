@@ -1,17 +1,17 @@
-## CropCare AI 🌿
+## CropCare AI 
 
 > **Empowering farmers with the world’s most advanced digital agronomy tools.**
 
 CropCare AI is a comprehensive precision agriculture application designed to help farmers quickly identify plant diseases, track their fields' health over time, and learn best practices for maintaining healthy crops.
 
-## 🚀 Features
+##  Features
 
 - **AI Diagnostic Scanner**: Upload or capture an image of a leaf directly from the browser. The integrated PyTorch ResNet18 model instantly analyzes the image and identifies potential diseases with high accuracy.
 - **Disease Wiki**: An extensive "Agri-Wiki" database containing detailed protocols, prevention tips, and environmental controls for various crop diseases (e.g., Tomato Late Blight, Potato Early Blight).
 - **History Dashboard**: A personalized timeline tracking past scans. Visually distinguishes between healthy and diseased crops so farmers can monitor trends and outbreaks.
 - **Premium User Interface**: A modern, responsive frontend built with React and Tailwind CSS v4, featuring a glassmorphic aesthetic, rich gradients, and smooth micro-animations.
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Category | Technology |
 | :--- | :--- |
@@ -22,7 +22,7 @@ CropCare AI is a comprehensive precision agriculture application designed to hel
 | **Infra** | [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/) |
 
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 KrishiSalakar/
@@ -37,7 +37,7 @@ KrishiSalakar/
 └── supabase_schema.sql     # Database schema for Supabase
 ```
 
-## ⚙️ Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js (v18+)
@@ -83,10 +83,10 @@ KrishiSalakar/
    ```
    The frontend will be running at `http://localhost:5173`.
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📜 License
+##  License
 
-© 2024 CropCare AI. Precision Agriculture for India.
+ 2024 CropCare AI. Precision Agriculture for India.
