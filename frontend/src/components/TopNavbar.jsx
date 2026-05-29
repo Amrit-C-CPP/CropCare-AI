@@ -43,9 +43,9 @@ const TopNavbar = () => {
       <div className="flex items-center gap-2 shrink-0">
         {user ? (
           <>
-            <div className="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm border border-outline-variant/30">
+            <Link to="/profile" className="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm border border-outline-variant/30 hover:opacity-80 transition-opacity cursor-pointer">
               {user?.email?.[0]?.toUpperCase() || 'U'}
-            </div>
+            </Link>
             <button
               onClick={handleSignOut}
               className="hidden sm:flex items-center gap-1 text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors px-3 py-1.5 rounded-full hover:bg-surface-container"

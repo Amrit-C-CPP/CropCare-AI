@@ -5,6 +5,7 @@ import Auth from './pages/Auth';
 import History from './pages/History';
 import Landing from './pages/Landing';
 import DiseaseDetail from './pages/DiseaseDetail';
+import Profile from './pages/Profile';
 import MainLayout from './components/MainLayout';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/history" element={<ProtectedPage><History /></ProtectedPage>} />
         <Route path="/wiki" element={<ProtectedPage><Wiki /></ProtectedPage>} />
         <Route path="/disease/:id" element={<ProtectedPage><DiseaseDetail /></ProtectedPage>} />
+        <Route path="/profile" element={<ProtectedPage><Profile /></ProtectedPage>} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Landing = () => {
+  const { user } = useAuth();
+
   return (
     <div className="bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
       {/* TopNavBar */}
@@ -15,10 +18,16 @@ const Landing = () => {
           <Link className="text-gray-800 font-semibold hover:text-green-600 transition-colors px-3 py-2 rounded-lg" to="/history">History</Link>
           <Link className="text-gray-800 font-semibold hover:text-green-600 transition-colors px-3 py-2 rounded-lg" to="/wiki">Wiki</Link>
         </nav>
-        <div className="flex items-center">
-          <Link to="/auth" className="text-gray-800 hover:text-green-600 transition-colors p-2 rounded-full flex items-center justify-center">
-            <span className="material-symbols-outlined">account_circle</span>
-          </Link>
+        <div className="flex items-center gap-4">
+          {user ? (
+            <Link to="/profile" className="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm border border-outline-variant/30 hover:opacity-80 transition-opacity cursor-pointer">
+              {user?.email?.[0]?.toUpperCase() || 'U'}
+            </Link>
+          ) : (
+            <Link to="/auth" className="text-gray-800 hover:text-green-600 transition-colors p-2 rounded-full flex items-center justify-center">
+              <span className="material-symbols-outlined">account_circle</span>
+            </Link>
+          )}
         </div>
       </header>
       

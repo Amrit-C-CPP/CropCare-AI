@@ -13,7 +13,7 @@ const Auth = () => {
 
   // Redirect if already logged in
   useEffect(() => {
-    if (user) navigate('/diagnostic-hub', { replace: true });
+    if (user) navigate('/', { replace: true });
   }, [user, navigate]);
 
   const handleGoogleLogin = async () => {
@@ -23,7 +23,7 @@ const Auth = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/diagnostic-hub`,
+          redirectTo: `${window.location.origin}/`,
         },
       });
       if (error) throw error;
@@ -73,58 +73,17 @@ const Auth = () => {
                 CropCare AI
             </h1>
             <h2 className="text-lg md:text-2xl font-semibold text-on-surface mt-6 mb-1">
-              {isLoginTab ? 'Welcome Back' : 'Create Account'}
+              Welcome
             </h2>
             <p className="text-sm text-on-surface-variant">
-              {isLoginTab ? 'Enter your credentials to access your dashboard.' : 'Sign up to start scanning crops.'}
+              Sign in with your preferred provider to access your dashboard.
             </p>
             </header>
 
             {error && <div className="mb-4 text-error text-sm text-center">{error}</div>}
 
-            {/* Auth Form */}
-            <form className="space-y-6" onSubmit={handleEmailAuth}>
-              {/* Floating Label Input: Email */}
-              <div className="relative group">
-                <input className="peer w-full h-14 px-6 pt-5 pb-2 bg-surface-container rounded-xl border border-transparent focus:border-transparent focus:ring-2 focus:ring-primary-container outline-none transition-all duration-300 font-body-md text-on-surface placeholder-transparent" id="email" placeholder="name@farm.com" required type="email"/>
-                <label className="absolute left-6 top-4 text-on-surface-variant font-body-md text-body-md transition-all duration-200 pointer-events-none peer-placeholder-shown:top-4 peer-placeholder-shown:text-body-md peer-placeholder-shown:text-on-surface-variant peer-focus:top-1.5 peer-focus:text-[11px] peer-focus:text-primary peer-valid:top-1.5 peer-valid:text-[11px] peer-valid:text-on-surface-variant" htmlFor="email">
-                    Email Address
-                </label>
-              </div>
-              {/* Floating Label Input: Password */}
-              <div className="relative group">
-                <input className="peer w-full h-14 px-6 pt-5 pb-2 bg-surface-container rounded-xl border border-transparent focus:border-transparent focus:ring-2 focus:ring-primary-container outline-none transition-all duration-300 font-body-md text-on-surface placeholder-transparent" id="password" placeholder="Password" required type="password"/>
-                <label className="absolute left-6 top-4 text-on-surface-variant font-body-md text-body-md transition-all duration-200 pointer-events-none peer-placeholder-shown:top-4 peer-placeholder-shown:text-body-md peer-placeholder-shown:text-on-surface-variant peer-focus:top-1.5 peer-focus:text-[11px] peer-focus:text-primary peer-valid:top-1.5 peer-valid:text-[11px] peer-valid:text-on-surface-variant" htmlFor="password">
-                    Password
-                </label>
-                <button className="absolute right-4 top-4 text-on-surface-variant hover:text-primary transition-colors" type="button">
-                  <span className="material-symbols-outlined text-[20px]">visibility_off</span>
-                </button>
-              </div>
-              {/* Options Row */}
-              <div className="flex items-center justify-between pt-2">
-                <label className="flex items-center gap-2 cursor-pointer group">
-                  <input className="w-4 h-4 rounded text-primary-container focus:ring-primary-container border-outline-variant bg-surface-container-lowest transition-colors group-hover:border-primary" type="checkbox"/>
-                  <span className="font-body-md text-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Remember me</span>
-                </label>
-                <a className="font-label-sm text-label-sm text-primary hover:text-primary-fixed-dim transition-colors" href="#">Forgot Password?</a>
-              </div>
-              {/* Submit Action */}
-              <button className="w-full h-14 mt-4 bg-primary-container text-on-primary-container font-label-sm text-label-sm rounded-xl shadow-sm shadow-primary-container/20 hover:scale-[1.02] hover:bg-[#95e01a] transition-all duration-300 flex items-center justify-center gap-2" type="submit">
-                  {isLoginTab ? 'Sign In' : 'Sign Up'}
-                  <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </button>
-            </form>
-
-            {/* Divider */}
-            <div className="relative flex items-center py-8">
-              <div className="flex-grow border-t border-outline-variant/30"></div>
-              <span className="flex-shrink-0 mx-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Or continue with</span>
-              <div className="flex-grow border-t border-outline-variant/30"></div>
-            </div>
-
             {/* Social Authentication */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
               <button onClick={handleGoogleLogin} disabled={loading} className="flex items-center justify-center h-14 bg-surface-container-lowest border border-outline-variant/50 rounded-xl hover:bg-surface-container-low hover:border-outline-variant transition-all duration-200 gap-3 font-label-sm text-label-sm text-on-surface">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
@@ -140,16 +99,6 @@ const Auth = () => {
                 </svg>
                   Apple
               </button>
-            </div>
-
-            {/* Registration Link */}
-            <div className="mt-12 text-center">
-              <p className="font-body-md text-body-md text-on-surface-variant">
-                  {isLoginTab ? "Don't have an account yet? " : "Already have an account? "}
-                  <button onClick={() => setIsLoginTab(!isLoginTab)} className="text-primary font-bold hover:text-primary-container transition-colors relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:bottom-0 after:left-0 after:bg-primary-container after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left" type="button">
-                      {isLoginTab ? 'Sign Up' : 'Sign In'}
-                  </button>
-              </p>
             </div>
           </div>
         </section>
