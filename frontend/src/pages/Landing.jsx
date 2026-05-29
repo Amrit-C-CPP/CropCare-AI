@@ -7,7 +7,7 @@ const Landing = () => {
       {/* TopNavBar */}
       <header className="bg-white shadow-md fixed left-0 top-0 w-full z-50 flex justify-between items-center px-4 md:px-8 h-16 border-b border-gray-200">
         <div className="flex items-center gap-2">
-          <span className="text-2xl">🌿</span>
+          <span className="material-symbols-outlined text-primary text-3xl">psychiatry</span>
           <span className="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">CropCare AI</span>
         </div>
         <nav className="hidden md:flex gap-8 items-center">
@@ -114,7 +114,7 @@ const Landing = () => {
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left border-t border-outline-variant/10 pt-8">
             <p className="font-body-md text-body-md text-on-surface-variant/70">
-              © 2024 CropCare AI. All rights reserved.
+               2024 CropCare AI. All rights reserved.
             </p>
             <div className="flex gap-6">
               <Link className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" to="#">Terms of Service</Link>
